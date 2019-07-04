@@ -19,7 +19,7 @@ public class MailReaderThread extends Thread{
 			}
 			catch(MailingException e)
 			{
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				//e.printStackTrace();
