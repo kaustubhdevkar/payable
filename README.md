@@ -1,2 +1,2 @@
 # payable
-Java Project 
+Java Maven Project
