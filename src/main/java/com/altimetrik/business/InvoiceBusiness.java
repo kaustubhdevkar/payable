@@ -19,7 +19,14 @@ public class InvoiceBusiness {
 	public InvoiceBusiness() {
 		dao = new InvoiceDAO();
 	}
-	
+	/**
+	 * Adds invoice to the database
+	 * @throws DatabaseException 
+	 */
+	public void addInvoice(Invoice invoice) throws DatabaseException
+	{
+		dao.addToDatabase(invoice);
+	}
 	/**
 	 * fetches all invoices from database and returns it in a List of invoice objects
 	 * @return 

@@ -25,6 +25,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.altimetrik.dao.InvoiceDAO;
+import com.altimetrik.business.InvoiceBusiness;
 import com.altimetrik.dao.DatabaseException;
 import com.altimetrik.mail.MailingException;
 import com.altimetrik.parser.InvoiceParser;
@@ -38,6 +39,7 @@ public class MailManager{
 	
 	static{
 		properties = new Properties();
+		//System.out.println(MailManager.class.getClassLoader().getSystemResource("mail.properties"));
 		try {
 			properties.load(new FileReader(mailPropertiesPath));
 		} catch (FileNotFoundException e1) {
@@ -149,8 +151,8 @@ public class MailManager{
 										   StandardCopyOption.REPLACE_EXISTING);
 								   Invoice obj =  InvoiceParser.parse(targetFile.getAbsolutePath());
 								   obj.setEmail(senders_email);
-								   InvoiceDAO dao = new InvoiceDAO();
-								   dao.addToDatabase(obj);
+								   InvoiceBusiness business = new InvoiceBusiness();
+								   business.addInvoice(obj);
 					   }
 				   }
 				   

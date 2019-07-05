@@ -1,6 +1,6 @@
 package com.altimetrik.dao;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.time.LocalDate;
@@ -38,7 +38,7 @@ public class InvoiceDAOTest {
 	public void getOneTest() throws DatabaseException 
 	{
 		Invoice invoice = new Invoice();
-		invoice.setInvoiceNo("2444234");
+		invoice.setInvoiceNo("24442342");
 		invoice.setAddress("sfsdf");
 		invoice.setAmount(23423);
 		invoice.setInvoiceDate(LocalDate.now());
@@ -47,6 +47,27 @@ public class InvoiceDAOTest {
 		invoice.setEmail("kk@gmail.com");
 		dao.addToDatabase(invoice);
 		assertEquals(invoice.getInvoiceNo(),dao.getFromDatabase(invoice.getInvoiceNo()).getInvoiceNo());
+		//assertEquals(invoice.getInvoiceNo(),dao.getFromDatabase(invoice.getInvoiceNo()));
+		
+		
+		
+	}
+	@Test
+	public void approveInvoiceTest() throws DatabaseException 
+	{
+		Invoice invoice = new Invoice();
+		invoice.setInvoiceNo("24442346");
+		invoice.setAddress("sfsdf");
+		invoice.setAmount(23423);
+		invoice.setInvoiceDate(LocalDate.now());
+		invoice.setCustomerPO("sdfsdg");
+		invoice.setApproved(false);
+		invoice.setEmail("kk@gmail.com");
+		dao.addToDatabase(invoice);
+		dao.approveInvoice(invoice.getInvoiceNo());
+		Invoice obj = dao.getFromDatabase(invoice.getInvoiceNo());
+		assertTrue(obj.isApproved());
+		//assertEquals(invoice.getInvoiceNo(),dao.getFromDatabase(invoice.getInvoiceNo()).getInvoiceNo());
 		//assertEquals(invoice.getInvoiceNo(),dao.getFromDatabase(invoice.getInvoiceNo()));
 		
 		
