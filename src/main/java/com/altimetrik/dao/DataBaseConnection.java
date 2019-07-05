@@ -23,7 +23,7 @@ public class DataBaseConnection {
 			"C:\\Users\\kdevkar\\Desktop\\java\\payable\\src\\main\\resources\\db.properties";
 	
 	/**
-	 * Gets the connection objects
+	 * Gets the connection object
 	 * @return Connection
 	 * @throws DatabaseException
 	 */
@@ -48,6 +48,7 @@ public class DataBaseConnection {
 				throw new DatabaseException("Database Error Occurred");
 			}  
 
+		
 		
 	}
 	
