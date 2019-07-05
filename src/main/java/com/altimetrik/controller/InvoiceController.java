@@ -3,6 +3,9 @@ package com.altimetrik.controller;
 import java.util.List;
 
 import com.altimetrik.dao.InvoiceDAO;
+import com.altimetrik.business.AlreadyApprovedException;
+import com.altimetrik.business.InvoiceBusiness;
+import com.altimetrik.business.InvoiceNotFoundException;
 import com.altimetrik.dao.DataAccess;
 import com.altimetrik.dao.DatabaseException;
 import com.altimetrik.mail.MailingException;
@@ -19,12 +22,11 @@ import com.altimetrik.view.Viewable;
  *
  */
 public class InvoiceController {
-	private DataAccess<Invoice> dao;
+	private InvoiceBusiness business;
 	private Viewable<Invoice> view;
-	private MailReaderThread mailThread;
-	private static int maxTryCount = 5; 
+	private MailReaderThread mailThread; 
 	public InvoiceController() {
-		dao = new InvoiceDAO();
+		business = new InvoiceBusiness();
 		view = new InvoiceView();
 		mailThread = new MailReaderThread();
 		mailThread.start();
@@ -50,7 +52,7 @@ public class InvoiceController {
 	public void listAllInvoices()
 	{
 		try {
-			List<Invoice> listOfInvoices = dao.getAllFromDatabase();
+			List<Invoice> listOfInvoices = business.getAllInvoices();
 			view.listAll(listOfInvoices);
 		} catch (DatabaseException e) {
 			//e.printStackTrace();
@@ -65,15 +67,20 @@ public class InvoiceController {
 	{
 		try {
 			Invoice invoice = view.takeInput();
-			InvoiceDAO daoObject = (InvoiceDAO) dao;
-			invoice = daoObject.getFromDatabase(invoice.getInvoiceNo());
-			if(invoice == null)
-				view.printMessage("No such Invoice Found !!");
-			else view.list(invoice);
-		} catch (DatabaseException e) {
+			if(invoice == null && invoice.getInvoiceNo().length() == 0)
+			{
+				view.printMessage("Please Enter Invoice No");
+				return;
+			}
+			invoice = business.getInvoice(invoice);
+			view.list(invoice);
+		} catch (InvoiceNotFoundException e) {
+			// TODO Auto-generated catch block
+			view.printMessage("No such Invoice Found..");
+		}catch (Exception e) {
 			//e.printStackTrace();
 			view.printMessage("Unknown Error occurred ! Please Try Again.");
-		}
+		} 
 	}
 	/**
 	 * approves one invoice from database and passes it to view layer for printing
@@ -82,32 +89,22 @@ public class InvoiceController {
 	{
 		try {
 			Invoice invoice = view.takeInput();
-			InvoiceDAO daoObject = (InvoiceDAO) dao;
-			invoice = daoObject.getFromDatabase(invoice.getInvoiceNo());
-			if(invoice == null)
-				view.printMessage("No such Invoice Found !!");
-			else if(invoice.isApproved() == true)
-				view.printMessage("This Invoice is already approved !");
-			else {
-				daoObject.approveInvoice(invoice.getInvoiceNo());
-				view.printMessage("Sending Approved Mail...");
-				int currrntTryCount = 0;
-				while(currrntTryCount < maxTryCount)
-				{
-					try {
-						sendInvoiceApproveMail(invoice);
-						break;
-					} catch (MailingException e) {
-						//e.printStackTrace();
-						currrntTryCount++;
-					}
-				}
-				view.printMessage("Invoice Approved ! Vendor is notified with email");
+			if(invoice == null && invoice.getInvoiceNo().length() == 0)
+			{
+				view.printMessage("Please Enter Invoice No");
+				return;
 			}
-		} catch (Exception e) {
-			//e.printStackTrace();
-			view.printMessage("Unknown Error occurred ! Please Try Again.");
+			invoice = business.approveInvoice(invoice);
+			sendInvoiceApproveMail(invoice);
+			view.printMessage("Invoice Approved Successfully ! Vendor will be notified with email");
+		} catch (InvoiceNotFoundException e) {
+			view.printMessage("No such Invoice Found..");
+		} catch (AlreadyApprovedException e) {
+			view.printMessage("This Invoice is already Approved.");
 		}
+		catch (Exception e) {
+			view.printMessage("Unknown Error occurred ! Please Try Again.");
+		} 
 	}
 	
 }

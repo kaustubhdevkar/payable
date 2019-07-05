@@ -1,5 +1,9 @@
 package com.altimetrik.mail;
-
+/**
+ * High level exception for mailing exceptions
+ * @author kdevkar
+ *
+ */
 public class MailingException extends Exception {
 	
 	 public MailingException() {
