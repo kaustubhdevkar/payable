@@ -43,7 +43,7 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 			stmt.setBoolean(6, obj.isApproved());
 			stmt.setString(7, obj.getEmail());
 			stmt.executeUpdate();
-			conn.close();
+			
 			
 		}
 		catch(Exception e)
