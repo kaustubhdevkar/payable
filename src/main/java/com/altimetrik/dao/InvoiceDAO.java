@@ -3,6 +3,7 @@ package com.altimetrik.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,10 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 	 */
 	@Override
 	public void addToDatabase(Invoice obj) throws DatabaseException {
+		Connection conn  = null;
 		try
 		{
-			Connection conn = DataBaseConnection.getConnection();
+			 conn = DataBaseConnection.getConnection();
 			
 			PreparedStatement stmt = conn.prepareStatement("insert into invoice(invoice_no,invoice_date,"
 					+ "customer_po,address,amount,is_approved,email) values(?,?,?,?,?,?,?);");
@@ -41,12 +43,24 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 			stmt.setBoolean(6, obj.isApproved());
 			stmt.setString(7, obj.getEmail());
 			stmt.executeUpdate();
+			conn.close();
 			
 		}
 		catch(Exception e)
 		{
 			//e.printStackTrace();
 			throw new DatabaseException("Database Error Occurred");
+		}
+		finally{
+			if(conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					//throw new DatabaseException("Database Error Occurred");
+				}
+			
 		}
 		
 		
@@ -62,10 +76,10 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 	 */
 	@Override
 	public Invoice getFromDatabase(int id) throws DatabaseException {
-		
+		Connection conn  = null;
 		try
 		{
-			Connection conn = DataBaseConnection.getConnection();
+			 conn = DataBaseConnection.getConnection();
 			PreparedStatement stmt = conn.prepareStatement("select * from invoice where id = ? ;");
 			stmt.setInt(1, id);
 			ResultSet resultSet = stmt.executeQuery();
@@ -89,6 +103,17 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 			//e.printStackTrace();
 			throw new DatabaseException("Database Error Occurred");
 		}
+		finally{
+			if(conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					//throw new DatabaseException("Database Error Occurred");
+				}
+			
+		}
 		return null;
 		
 		
@@ -104,9 +129,10 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 
 	@Override
 	public List<Invoice> getAllFromDatabase() throws DatabaseException {
+		Connection conn  = null;
 		try
 		{
-			Connection conn = DataBaseConnection.getConnection();
+			conn = DataBaseConnection.getConnection();
 			PreparedStatement stmt = conn.prepareStatement("select * from invoice;");
 			ResultSet resultSet = stmt.executeQuery();
 			List<Invoice> list = new ArrayList<>();
@@ -132,6 +158,17 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 			//e.printStackTrace();
 			throw new DatabaseException("Database Error Occurred");
 		}
+		finally{
+			if(conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					//throw new DatabaseException("Database Error Occurred");
+				}
+			
+		}
 		return null;
 		
 		
@@ -144,9 +181,10 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 	 * @throws DatabaseException
 	 */
 	public Invoice getFromDatabase(String invoiceNo) throws DatabaseException {
+		Connection conn  = null;
 		try
 		{
-			Connection conn = DataBaseConnection.getConnection();
+			 conn = DataBaseConnection.getConnection();
 			PreparedStatement stmt = conn.prepareStatement("select * from invoice where invoice_no = ? ;");
 			stmt.setString(1, invoiceNo);
 			ResultSet resultSet = stmt.executeQuery();
@@ -170,6 +208,17 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 			e.printStackTrace();
 			throw new DatabaseException("Database Error Occurred");
 		}
+		finally{
+			if(conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					//throw new DatabaseException("Database Error Occurred");
+				}
+			
+		}
 		return null;
 		
 		
@@ -181,9 +230,10 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 	 */
 	public void approveInvoice(String invoiceNo) throws DatabaseException
 	{
+		Connection conn  = null;
 		try
 		{
-			Connection conn = DataBaseConnection.getConnection();
+			 conn = DataBaseConnection.getConnection();
 			PreparedStatement stmt = conn.prepareStatement("update invoice set is_approved = ? where invoice_no = ?;");
 			stmt.setBoolean(1, true);
 			stmt.setString(2, invoiceNo);
@@ -193,6 +243,17 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 		{
 			//e.printStackTrace();
 			throw new DatabaseException("Database Error Occurred");
+		}
+		finally{
+			if(conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					//throw new DatabaseException("Database Error Occurred");
+				}
+			
 		}
 		
 	}
