@@ -18,26 +18,25 @@ import com.altimetrik.dao.DatabaseException;
  */
 public class DataBaseConnection {
 
-	private static Connection conn;
+	
 	private static String dbPropertiesPath =
 			"C:\\Users\\kdevkar\\Desktop\\java\\payable\\src\\main\\resources\\db.properties";
 	
 	/**
-	 * Gets the connection object
+	 * Gets the connection objects
 	 * @return Connection
 	 * @throws DatabaseException
 	 */
 	public static  Connection getConnection() throws DatabaseException
 	{
-		if(conn == null)
-		{
+		
 			try
 			{  
 				Properties properties = new Properties();
 				properties.load(new FileReader(dbPropertiesPath));
 				
 				
-				conn=DriverManager.getConnection(
+				return DriverManager.getConnection(
 						properties.getProperty("connectionString"),
 						properties.getProperty("userName"),
 						properties.getProperty("password")); 
@@ -49,8 +48,7 @@ public class DataBaseConnection {
 				throw new DatabaseException("Database Error Occurred");
 			}  
 
-		}
-		return conn;
+		
 	}
 	
 }
