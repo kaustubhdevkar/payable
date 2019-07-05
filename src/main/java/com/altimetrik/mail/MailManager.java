@@ -46,7 +46,13 @@ public class MailManager{
 			e1.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Function for sending mail
+	 * @param to
+	 * @param subject
+	 * @param content
+	 * @throws MailingException
+	 */
 	public static void sendEmail(String to,String subject,String content) throws MailingException
 	{
 			//Local properties
@@ -81,7 +87,14 @@ public class MailManager{
 
 	}
 	
-	
+	/**
+	 * Function for reading mails putting extracted data in DB
+	 * @param pop3Host
+	 * @param mailStoreType
+	 * @param userName
+	 * @param password
+	 * @throws MailingException
+	 */
 	
 	 public static void receiveEmail(String pop3Host,
 			    String mailStoreType, String userName, String password) throws MailingException{

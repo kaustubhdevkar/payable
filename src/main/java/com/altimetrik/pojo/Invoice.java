@@ -1,7 +1,11 @@
 package com.altimetrik.pojo;
 
 import java.time.LocalDate;
-
+/**
+ * POJO class Invoice Model
+ * @author kdevkar
+ *
+ */
 public class Invoice {
 	private int id;
     private String invoiceNo;

@@ -1,7 +1,11 @@
 package com.altimetrik.mail;
 import static com.altimetrik.mail.MailManager.properties;
-
 import com.altimetrik.mail.MailingException;
+/**
+ * MailReaderThread which continuous monitors the mail
+ * @author kdevkar
+ *
+ */
 public class MailReaderThread extends Thread{
 	@Override
 	public void run() {

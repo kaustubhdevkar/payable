@@ -12,8 +12,17 @@ import com.altimetrik.dao.DataAccess;
 import com.altimetrik.parser.InvoiceParser;
 import com.altimetrik.pojo.Invoice;
 
+/**
+ * DataAccess Object class for Invoice implements the DataAccess interface
+ * @author kdevkar
+ *
+ */
 public class InvoiceDAO implements DataAccess<Invoice>{
 
+	/**
+	 * Adds one Invoice object to database
+	 * @throws DatabaseException
+	 */
 	@Override
 	public void addToDatabase(Invoice obj) throws DatabaseException {
 		try
@@ -43,8 +52,14 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 		
 		
 	}
-
-
+	
+	/**
+	 * Returns an invoice objects given and id if it exists otherwise null
+	 * will be returned
+	 * @param id ID in the database
+	 * @return Invoice Invoice Object
+	 * @throws DatabaseException
+	 */
 	@Override
 	public Invoice getFromDatabase(int id) throws DatabaseException {
 		
@@ -80,6 +95,12 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 		
 	}
 	
+	/**
+	 * Gets all the invoices from databases as a list of invoice objects ,
+	 * if no invoice is present then null will be returned
+	 * @return List<Invoice> 
+	 * @throws DatabaseException
+	 */
 
 	@Override
 	public List<Invoice> getAllFromDatabase() throws DatabaseException {
@@ -115,6 +136,13 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 		
 		
 	}
+	/**
+	 * Returns an invoice objects given invoice NO if it exists otherwise null
+	 * will be returned
+	 * @param invoiceNo invoiceNo in the database
+	 * @return Invoice Invoice Object
+	 * @throws DatabaseException
+	 */
 	public Invoice getFromDatabase(String invoiceNo) throws DatabaseException {
 		try
 		{
@@ -146,6 +174,11 @@ public class InvoiceDAO implements DataAccess<Invoice>{
 		
 		
 	}
+	/**
+	 * Approves an invoice  given invoice NO if it exists otherwise throws an exception
+	 * @param invoiceNo invoiceNo in the database
+	 * @throws DatabaseException
+	 */
 	public void approveInvoice(String invoiceNo) throws DatabaseException
 	{
 		try

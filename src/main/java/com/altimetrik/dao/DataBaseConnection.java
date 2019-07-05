@@ -11,12 +11,22 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import com.altimetrik.dao.DatabaseException;
-
+/**
+ * class to get the database connection
+ * @author kdevkar
+ *
+ */
 public class DataBaseConnection {
 
 	private static Connection conn;
 	private static String dbPropertiesPath =
 			"C:\\Users\\kdevkar\\Desktop\\java\\payable\\src\\main\\resources\\db.properties";
+	
+	/**
+	 * Gets the connection object
+	 * @return Connection
+	 * @throws DatabaseException
+	 */
 	public static  Connection getConnection() throws DatabaseException
 	{
 		if(conn == null)

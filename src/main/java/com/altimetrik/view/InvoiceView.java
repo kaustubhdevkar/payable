@@ -5,9 +5,17 @@ import java.util.Scanner;
 
 import com.altimetrik.view.Viewable;
 import com.altimetrik.pojo.Invoice;
-
+/**
+ * This class forms the view layer of the application and it implements Viewable<E> Interface
+ * @author kdevkar
+ *
+ */
 public class InvoiceView implements Viewable<Invoice>{
 
+	/**
+	 * Prints one invoice
+	 * @param obj an invoice object
+	 */
 	@Override
 	public void list(Invoice obj) {
 		
@@ -24,7 +32,11 @@ public class InvoiceView implements Viewable<Invoice>{
 		
 		
 	}
-
+	
+	/**
+	 * Prints list of invoices
+	 * @param obj an invoice list object
+	 */
 	@Override
 	public void listAll(List<Invoice> obj) {
 		if(obj == null)
@@ -41,7 +53,10 @@ public class InvoiceView implements Viewable<Invoice>{
 		
 		
 	}
-
+	/**
+	 * Takes input as invoice number puts it in an invoice object and returns it
+	 * @return Invoice 
+	 */
 	@Override
 	public Invoice takeInput() {
 		System.out.println("Enter Invoice No :");
@@ -51,7 +66,10 @@ public class InvoiceView implements Viewable<Invoice>{
 		obj.setInvoiceNo(invoiceNo);
 		return obj;
 	}
-
+	/**
+	 * prints the passes message
+	 * @param message
+	 */
 	@Override
 	public void printMessage(String message) {
 		System.out.println(message);

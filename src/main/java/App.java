@@ -2,7 +2,11 @@ import java.util.Scanner;
 
 import com.altimetrik.controller.InvoiceController;
 import com.altimetrik.mail.MailReaderThread;
-
+/**
+ * This is main App class which should be run for running applications
+ * @author kdevkar
+ *
+ */
 public class App {
 
 	public static void main(String[] args) {

@@ -18,10 +18,22 @@ import org.apache.pdfbox.text.PDFTextStripperByArea;
 
 import com.altimetrik.parser.ParsingException;
 import com.altimetrik.pojo.Invoice;
-
+/**
+ * Class to parse invoices
+ * @author kdevkar
+ *
+ */
 public class InvoiceParser {
+	/**
+	 * Standard DateFormat to represent date
+	 */
 	public static DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern("dd/MM/yy");
-
+	/**
+	 * parses the invoice on the given path
+	 * @param path a string representing path to invoice
+	 * @return Invoice invoice object
+	 * @throws ParsingException
+	 */
 	public static Invoice parse(String path) throws ParsingException
 	{
 		File file = new File(path);
@@ -31,6 +43,7 @@ public class InvoiceParser {
 			 String text = pdfStripper.getText(doc);  
 			 String[] splitText = text.split("\n");
 			 double amount = 0;
+			 // Local variables for all the fields
 			 String invoiceNo="",customerPO="",address="";
 			 LocalDate invoiceDate = null;
 
