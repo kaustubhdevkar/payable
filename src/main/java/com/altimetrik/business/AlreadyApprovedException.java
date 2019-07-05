@@ -9,5 +9,8 @@ public class AlreadyApprovedException extends Exception {
 	public AlreadyApprovedException() {
 		super("Invoice is Already Approved");
 	}
+	public AlreadyApprovedException(String str) {
+		super(str);
+	}
 
 }
