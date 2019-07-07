@@ -14,7 +14,7 @@ import com.altimetrik.pojo.Invoice;
 import com.altimetrik.view.InvoiceView;
 import com.altimetrik.view.Viewable;
 
-public class InvoiceBusiness {
+public class InvoiceBusiness implements BusinessInterface {
 	private DataAccess<Invoice> dao;
 	public InvoiceBusiness() {
 		dao = new InvoiceDAO();
@@ -23,6 +23,7 @@ public class InvoiceBusiness {
 	 * Adds invoice to the database
 	 * @throws DatabaseException 
 	 */
+	@Override
 	public void addInvoice(Invoice invoice) throws DatabaseException
 	{
 		dao.addToDatabase(invoice);
@@ -32,6 +33,7 @@ public class InvoiceBusiness {
 	 * @return 
 	 * @throws DatabaseException 
 	 */
+	@Override
 	public List<Invoice> getAllInvoices() throws DatabaseException
 	{
 			return dao.getAllFromDatabase();
@@ -41,6 +43,7 @@ public class InvoiceBusiness {
 	 * @throws DatabaseException 
 	 * @throws InvoiceNotFoundException 
 	 */
+	@Override
 	public Invoice getInvoice(Invoice invoice) throws DatabaseException, InvoiceNotFoundException
 	{
 		
@@ -61,6 +64,7 @@ public class InvoiceBusiness {
 	 * @throws InvoiceNotFoundException 
 	 * @throws AlreadyApprovedException 
 	 */
+	@Override
 	public Invoice approveInvoice(Invoice invoice) throws DatabaseException, InvoiceNotFoundException, AlreadyApprovedException
 	{
 		if(dao instanceof InvoiceDAO)
